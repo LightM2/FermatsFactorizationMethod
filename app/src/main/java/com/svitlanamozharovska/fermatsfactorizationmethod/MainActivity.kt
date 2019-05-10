@@ -3,14 +3,9 @@ package com.svitlanamozharovska.fermatsfactorizationmethod
 import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.EditText
 import android.widget.TextView
-import android.view.View
-import android.widget.Button
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.NumberFormatException
-import android.R.integer
 import java.math.BigInteger
 
 
@@ -29,14 +24,18 @@ class MainActivity : AppCompatActivity() {
             val numb = editText2.text.toString()
             try {
                 val number = numb.toInt()
-                val aAndB = fermatMethod(number)
-                var result = "    $number = "
-                for (i in 0..(aAndB.size-1)){
-                    when (i) {
-                        0 -> result += aAndB[i]
-                        else -> result += " * ${aAndB[i]}"
+                var result :String
+                if(number < 17000000){
+                    val aAndB = fermatMethod(number)
+                    result = "    $number = "
+                    for (i in 0..(aAndB.size-1)){
+                        when (i) {
+                            0 -> result += aAndB[i]
+                            else -> result += " * ${aAndB[i]}"
+                        }
                     }
-                }
+                }else result = " N > 17000000"
+
                 tResult.text = result
             }catch (e:NumberFormatException){
                 println(numb)
@@ -61,7 +60,9 @@ class MainActivity : AppCompatActivity() {
                 val probablePrimeA = bigIntegerA.isProbablePrime(Math.log(a.toDouble()).toInt())
                 val bigIntegerB = BigInteger.valueOf(b.toLong())
                 val probablePrimeB = bigIntegerB.isProbablePrime(Math.log(b.toDouble()).toInt())
-                when{
+                aAndB.add(a.toString())
+                aAndB.add(b.toString())
+                /*when{
                     probablePrimeA and probablePrimeB -> {
                         aAndB.add(a.toString())
                         aAndB.add(b.toString())
@@ -79,7 +80,7 @@ class MainActivity : AppCompatActivity() {
                         aAndB.add(aAndBb[1])
                     }
 
-                }
+                }*/
                 return aAndB
             }
         }
